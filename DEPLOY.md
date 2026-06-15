@@ -7,7 +7,7 @@ The app is **100% ready to go live** — it just needs to be published to the we
 ## ⭐ Option A — GitHub Pages (one command, recommended)
 I've already installed the GitHub CLI and prepared the repo. You just authenticate once, then run the script.
 
-1. Open **PowerShell** in this folder (`C:\Users\kscha\Claude`).
+1. Open **PowerShell** in this folder (`C:\Users\kscha\Claude\beachswap`).
 2. Log in to GitHub (one time, ~30 seconds — opens your browser):
    ```powershell
    gh auth login
@@ -27,7 +27,7 @@ I've already installed the GitHub CLI and prepared the repo. You just authentica
 Good if you want a link in literally 20 seconds without touching a terminal.
 
 1. Go to **https://app.netlify.com/drop**
-2. Drag this whole folder (`C:\Users\kscha\Claude`) onto the page.
+2. Drag **only the `beachswap` folder** (`C:\Users\kscha\Claude\beachswap`) onto the page — not the parent `Claude` folder, which contains your other personal files.
 3. You instantly get a public link like `https://random-name.netlify.app`.
 4. (Optional) Click **“Claim this site”** and sign in to keep it permanently and rename it.
 
