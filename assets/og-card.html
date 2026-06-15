@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Outfit:wght@400;500;600&display=swap');
+  *{margin:0;box-sizing:border-box}
+  /* Exactly 1200x630 — open in a browser and screenshot/export to PNG for use as a social share image. */
+  .card{width:1200px;height:630px;position:relative;overflow:hidden;
+    background:linear-gradient(165deg,#7fdcef 0%,#bfe9f0 26%,#ffe2bf 60%,#ffd79e 100%);
+    font-family:'Outfit',sans-serif;display:flex;flex-direction:column;justify-content:center;padding:0 86px}
+  .sun{position:absolute;top:60px;right:120px;width:200px;height:200px;border-radius:50%;
+    background:radial-gradient(circle,#fff3c4,#ffb800 60%,#ff9e2c);box-shadow:0 0 130px 50px rgba(255,184,0,.5)}
+  .waves{position:absolute;bottom:-2px;left:0;width:1200px}
+  .brand{display:flex;align-items:center;gap:18px;margin-bottom:30px;position:relative;z-index:2}
+  .brand .ball{width:64px;height:64px}
+  .brand b{font-family:'Bricolage Grotesque';font-weight:800;font-size:42px;letter-spacing:-2px;color:#142a2e}
+  .brand b span{color:#ff5e3a}
+  h1{font-family:'Bricolage Grotesque';font-weight:800;font-size:74px;line-height:1.02;letter-spacing:-2.5px;color:#142a2e;position:relative;z-index:2;max-width:900px}
+  h1 .c{color:#ff5e3a}
+  p{font-size:30px;color:#3a565a;font-weight:500;margin-top:26px;position:relative;z-index:2;max-width:780px}
+  .chips{display:flex;gap:14px;margin-top:34px;position:relative;z-index:2}
+  .chip{background:rgba(255,255,255,.8);border:1px solid #fff;border-radius:999px;padding:12px 22px;font-size:21px;font-weight:600;color:#0487b0}
+</style></head>
+<body>
+<div class="card" id="card">
+  <div class="sun"></div>
+  <div class="brand">
+    <svg class="ball" viewBox="0 0 100 100"><circle cx="50" cy="50" r="47" fill="#ff5e3a"/><path d="M50 3a47 47 0 0 1 0 94M50 3a47 47 0 0 0 0 94M5 35h90M5 65h90" fill="none" stroke="#fff" stroke-width="5"/></svg>
+    <b>Beach<span>Swap</span></b>
+  </div>
+  <h1>Your court's empty?<br><span class="c">Swap it, don't waste it.</span></h1>
+  <p>Put your unused beach volleyball court back on the market. Win–win–win.</p>
+  <div class="chips"><span class="chip">💸 Recover up to 85%</span><span class="chip">⚡ Listed in 2 taps</span><span class="chip">🤝 No app to install</span></div>
+  <svg class="waves" viewBox="0 0 1200 70" preserveAspectRatio="none"><path fill="#fff6e9" d="M0 36c150 28 300 28 450 9s300-37 450-23 200 23 300 23v32H0z"/></svg>
+</div>
+</body></html>

@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BeachSwap — Court slot marketplace</title>
+<style>
+  :root {
+    --sand: #f4ecd8;
+    --sand-dark: #e8dcc0;
+    --teal: #0d8a8a;
+    --teal-dark: #0a6e6e;
+    --coral: #ff6b5b;
+    --ink: #243b3b;
+    --muted: #6b7d7d;
+    --good: #1f9d57;
+    --warn: #d98324;
+    --line: #d9cfb8;
+    --card: #fffdf7;
+    --shadow: 0 2px 10px rgba(36,59,59,.08);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: linear-gradient(160deg, var(--sand) 0%, #fbf6ea 100%);
+    color: var(--ink);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  header.app {
+    background: linear-gradient(120deg, var(--teal) 0%, var(--teal-dark) 100%);
+    color: #fff;
+    padding: 18px 20px 16px;
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .app-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; max-width: 920px; margin: 0 auto; }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand .logo { font-size: 26px; }
+  .brand h1 { font-size: 20px; margin: 0; letter-spacing: .3px; }
+  .brand p { margin: 2px 0 0; font-size: 12px; opacity: .85; }
+  .roles { display: flex; background: rgba(255,255,255,.15); border-radius: 999px; padding: 3px; gap: 2px; }
+  .roles button {
+    border: none; background: transparent; color: #fff; padding: 7px 13px;
+    border-radius: 999px; cursor: pointer; font-size: 13px; font-weight: 600; white-space: nowrap;
+    transition: .15s;
+  }
+  .roles button.active { background: #fff; color: var(--teal-dark); box-shadow: 0 1px 4px rgba(0,0,0,.15); }
+  main { max-width: 920px; margin: 0 auto; padding: 20px 16px 60px; }
+  .view-intro { margin: 4px 0 18px; }
+  .view-intro h2 { margin: 0 0 4px; font-size: 22px; }
+  .view-intro p { margin: 0; color: var(--muted); font-size: 14px; }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    padding: 16px; margin-bottom: 14px; box-shadow: var(--shadow);
+  }
+  .card h3 { margin: 0 0 12px; font-size: 16px; display: flex; align-items: center; gap: 8px; }
+  .slot-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 12px 0; border-top: 1px solid var(--line);
+  }
+  .slot-row:first-of-type { border-top: none; }
+  .slot-main { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+  .slot-when { font-weight: 600; font-size: 15px; }
+  .slot-sub { font-size: 12.5px; color: var(--muted); }
+  .pill {
+    font-size: 11.5px; font-weight: 700; padding: 4px 9px; border-radius: 999px; white-space: nowrap;
+    text-transform: uppercase; letter-spacing: .4px;
+  }
+  .pill.yours { background: #eef4f4; color: var(--teal-dark); }
+  .pill.listed { background: #fff1e6; color: var(--warn); }
+  .pill.booked { background: #e7f6ee; color: var(--good); }
+  .pill.avail { background: #fff1e6; color: var(--warn); }
+  .slot-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  button.btn {
+    border: none; border-radius: 9px; padding: 8px 14px; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: .15s; white-space: nowrap;
+  }
+  button.btn.primary { background: var(--coral); color: #fff; }
+  button.btn.primary:hover { filter: brightness(1.05); }
+  button.btn.ghost { background: #f0ece0; color: var(--ink); }
+  button.btn.ghost:hover { background: #e6e0cf; }
+  button.btn.teal { background: var(--teal); color: #fff; }
+  button.btn.teal:hover { background: var(--teal-dark); }
+  button.btn:disabled { opacity: .45; cursor: default; }
+  .price { font-weight: 800; font-size: 16px; color: var(--ink); }
+  .empty { color: var(--muted); font-size: 14px; padding: 8px 0; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 14px; }
+  .stat { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px; text-align: center; box-shadow: var(--shadow); }
+  .stat .n { font-size: 22px; font-weight: 800; color: var(--teal-dark); }
+  .stat .l { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 9px 8px; border-bottom: 1px solid var(--line); }
+  th { font-size: 11px; text-transform: uppercase; letter-spacing: .4px; color: var(--muted); }
+  td.num, th.num { text-align: right; }
+  .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+  .filters button { border: 1px solid var(--line); background: var(--card); padding: 7px 13px; border-radius: 999px; font-size: 13px; cursor: pointer; font-weight: 600; color: var(--muted); }
+  .filters button.on { background: var(--teal); color: #fff; border-color: var(--teal); }
+  label.field { display: block; font-size: 12.5px; font-weight: 600; color: var(--muted); margin-bottom: 5px; }
+  input.in, select.in { width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: 9px; font-size: 14px; background: #fff; color: var(--ink); }
+  .row2 { display: flex; gap: 12px; }
+  .row2 > div { flex: 1; }
+  .settle {
+    background: #f7f3e8; border: 1px dashed var(--line); border-radius: 10px; padding: 12px; margin-top: 10px; font-size: 13px;
+  }
+  .settle .line { display: flex; justify-content: space-between; padding: 3px 0; }
+  .settle .line.total { font-weight: 800; border-top: 1px solid var(--line); margin-top: 5px; padding-top: 7px; }
+  /* modal */
+  .modal-bg { position: fixed; inset: 0; background: rgba(36,59,59,.45); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 50; }
+  .modal { background: var(--card); border-radius: 16px; padding: 22px; width: 100%; max-width: 420px; box-shadow: 0 20px 50px rgba(0,0,0,.25); }
+  .modal h3 { margin: 0 0 4px; font-size: 18px; }
+  .modal .sub { color: var(--muted); font-size: 13px; margin-bottom: 16px; }
+  .modal-actions { display: flex; gap: 10px; margin-top: 18px; }
+  .modal-actions .btn { flex: 1; padding: 11px; }
+  .toast {
+    position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%);
+    background: var(--ink); color: #fff; padding: 12px 20px; border-radius: 999px; font-size: 14px; font-weight: 600;
+    box-shadow: 0 6px 20px rgba(0,0,0,.3); z-index: 60; opacity: 0; transition: opacity .25s, transform .25s; pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .me-tag { background: var(--coral); color: #fff; font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 999px; margin-left: 6px; vertical-align: middle; }
+  .section-note { font-size: 12.5px; color: var(--muted); margin: -6px 0 14px; }
+  .inline-edit { display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; }
+  .inline-edit > div { flex: 1; min-width: 130px; }
+  .reset-link { background: none; border: none; color: var(--muted); font-size: 12px; cursor: pointer; text-decoration: underline; }
+  @media (max-width: 620px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .brand p { display: none; }
+    .app-top { flex-wrap: wrap; }
+    .brand h1 { font-size: 18px; }
+    .roles { width: 100%; justify-content: space-between; margin-top: 4px; }
+    .roles button { flex: 1; padding: 8px 6px; font-size: 12.5px; text-align: center; }
+    .slot-row { flex-wrap: wrap; }
+    table { font-size: 12px; }
+    th, td { padding: 7px 5px; }
+  }
+</style>
+</head>
+<body>
+<header class="app">
+  <div class="app-top">
+    <div class="brand">
+      <span class="logo">🏐</span>
+      <div>
+        <h1>BeachSwap</h1>
+        <p>Put your booked court back on the market</p>
+      </div>
+    </div>
+    <div class="roles" id="roles">
+      <button data-role="seller">My courts</button>
+      <button data-role="buyer">Find a court</button>
+      <button data-role="owner">Owner</button>
+    </div>
+  </div>
+</header>
+<main id="app"></main>
+<div id="modal-root"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ----------------------------------------------------------
+   BeachSwap — prototype
+   Single-file, offline. Manual/offline payments:
+   the app tracks bookings + who-owes-whom; people settle by
+   bank transfer. Data persists in localStorage.
+---------------------------------------------------------- */
+
+const STORAGE_KEY = "beachswap_v1";
+const DAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const fmt = n => "$" + n.toFixed(2).replace(/\.00$/, "");
+const WEEKS_AHEAD = 8;
+
+// ---------- seed data ----------
+function seed() {
+  // A pass = a person who holds a recurring weekly slot on a specific court.
+  // "You" hold Court 12, Tuesday 18:00. The rest are other season-pass holders.
+  const passes = [
+    { id: "p_me",  holder: "You",            court: 12, day: 2, time: "18:00", isMe: true  },
+    { id: "p_01",  holder: "Aroha Williams",  court: 3,  day: 1, time: "17:00", isMe: false },
+    { id: "p_02",  holder: "Ben Carter",      court: 7,  day: 1, time: "19:00", isMe: false },
+    { id: "p_03",  holder: "Mia Tanaka",      court: 21, day: 2, time: "07:00", isMe: false },
+    { id: "p_04",  holder: "Leo Schmidt",     court: 5,  day: 3, time: "18:00", isMe: false },
+    { id: "p_05",  holder: "Priya Nair",      court: 14, day: 3, time: "20:00", isMe: false },
+    { id: "p_06",  holder: "Tomas Silva",     court: 9,  day: 4, time: "18:00", isMe: false },
+    { id: "p_07",  holder: "Hana Park",       court: 30, day: 4, time: "19:00", isMe: false },
+    { id: "p_08",  holder: "Jack O'Neill",    court: 2,  day: 5, time: "17:00", isMe: false },
+    { id: "p_09",  holder: "Sofia Rossi",     court: 18, day: 6, time: "10:00", isMe: false },
+    { id: "p_10",  holder: "Noah Becker",     court: 25, day: 6, time: "11:00", isMe: false },
+    { id: "p_11",  holder: "Emma Larsen",     court: 11, day: 0, time: "09:00", isMe: false },
+  ];
+  return {
+    settings: { courtName: "Takapuna Beach Volleyball Club", commissionPct: 15, defaultPrice: 35, currency: "NZD" },
+    passes,
+    listings: [],       // {id, passId, dateISO, price, status, buyer, bookedAt}
+    role: "seller",
+    seedBookings: true,
+  };
+}
+
+// ---------- date helpers ----------
+function todayMidnight() { const d = new Date(); d.setHours(0,0,0,0); return d; }
+function nextDatesFor(dayOfWeek, count) {
+  const out = [];
+  const d = todayMidnight();
+  // advance to the next occurrence (including today)
+  let delta = (dayOfWeek - d.getDay() + 7) % 7;
+  d.setDate(d.getDate() + delta);
+  for (let i = 0; i < count; i++) {
+    out.push(new Date(d));
+    d.setDate(d.getDate() + 7);
+  }
+  return out;
+}
+function iso(d) { return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); }
+function prettyDate(isoStr) {
+  const [y,m,da] = isoStr.split("-").map(Number);
+  const d = new Date(y, m-1, da);
+  return DAYS[d.getDay()].slice(0,3) + " " + da + " " + MONTHS[m-1];
+}
+function weeksFromNow(isoStr) {
+  const [y,m,da] = isoStr.split("-").map(Number);
+  const d = new Date(y, m-1, da); d.setHours(0,0,0,0);
+  return Math.round((d - todayMidnight()) / (7*24*3600*1000));
+}
+
+// ---------- safe storage ----------
+// Browsers block localStorage when the page is opened as a local file
+// (file://) or in private modes. Guard every access so the app still
+// runs (just without cross-visit persistence) instead of crashing.
+const store = {
+  get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} },
+  remove(k) { try { localStorage.removeItem(k); } catch (e) {} },
+};
+
+// ---------- state ----------
+let state = load();
+function load() {
+  try {
+    const raw = store.get(STORAGE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch (e) {}
+  const s = seed();
+  applySeedBookings(s);
+  save(s);
+  return s;
+}
+function save(s) { store.set(STORAGE_KEY, JSON.stringify(s || state)); }
+function applySeedBookings(s) {
+  // create a few sample listings so Buyer & Owner views aren't empty
+  const mk = (passId, weekOffset, price, status, buyer) => {
+    const pass = s.passes.find(p => p.id === passId);
+    const dates = nextDatesFor(pass.day, WEEKS_AHEAD);
+    const target = dates[weekOffset];
+    if (!target) return;
+    s.listings.push({
+      id: "l_" + passId + "_" + iso(target),
+      passId, dateISO: iso(target), price,
+      status, buyer: buyer || null,
+      bookedAt: status === "booked" ? iso(todayMidnight()) : null,
+    });
+  };
+  mk("p_01", 1, 30, "available");
+  mk("p_03", 1, 25, "booked", "Daniel Wu");
+  mk("p_04", 2, 35, "available");
+  mk("p_07", 1, 40, "booked", "Olivia Brown");
+  mk("p_08", 2, 30, "available");
+  mk("p_09", 2, 45, "available");
+  mk("p_05", 3, 35, "booked", "Marcus Lee");
+  mk("p_02", 2, 28, "available");
+  s.seedBookings = false;
+}
+
+// ---------- derived ----------
+function listingFor(passId, dateISO) { return state.listings.find(l => l.passId === passId && l.dateISO === dateISO && l.status !== "withdrawn"); }
+function passById(id) { return state.passes.find(p => p.id === id); }
+function commission(price) { return Math.round(price * state.settings.commissionPct) / 100; }
+function payout(price) { return Math.round((price - commission(price)) * 100) / 100; }
+
+// ---------- toast ----------
+let toastTimer;
+function toast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove("show"), 2200);
+}
+
+// ---------- modal ----------
+function closeModal() { document.getElementById("modal-root").innerHTML = ""; }
+function openModal(html) {
+  const root = document.getElementById("modal-root");
+  root.innerHTML = `<div class="modal-bg" id="modal-bg"><div class="modal">${html}</div></div>`;
+  document.getElementById("modal-bg").addEventListener("click", e => { if (e.target.id === "modal-bg") closeModal(); });
+}
+
+// =====================================================
+//  RENDER
+// =====================================================
+function render() {
+  // role buttons
+  document.querySelectorAll("#roles button").forEach(b =>
+    b.classList.toggle("active", b.dataset.role === state.role));
+  const app = document.getElementById("app");
+  if (state.role === "seller") app.innerHTML = renderSeller();
+  else if (state.role === "buyer") app.innerHTML = renderBuyer();
+  else app.innerHTML = renderOwner();
+  wire();
+}
+
+// ---------- SELLER ----------
+function renderSeller() {
+  const myPasses = state.passes.filter(p => p.isMe);
+  let cards = myPasses.map(pass => {
+    const dates = nextDatesFor(pass.day, WEEKS_AHEAD);
+    const rows = dates.map(d => {
+      const di = iso(d);
+      const wk = weeksFromNow(di);
+      const lst = listingFor(pass.id, di);
+      let pill, right;
+      if (lst && lst.status === "booked") {
+        pill = `<span class="pill booked">Booked</span>`;
+        right = `<div class="slot-right"><span class="slot-sub">${lst.buyer} · you get ${fmt(payout(lst.price))}</span></div>`;
+      } else if (lst && lst.status === "available") {
+        pill = `<span class="pill listed">On market · ${fmt(lst.price)}</span>`;
+        right = `<div class="slot-right"><button class="btn ghost" data-act="withdraw" data-id="${lst.id}">Take down</button></div>`;
+      } else {
+        pill = `<span class="pill yours">Yours</span>`;
+        right = `<div class="slot-right"><button class="btn primary" data-act="list" data-pass="${pass.id}" data-date="${di}">Put on market</button></div>`;
+      }
+      return `<div class="slot-row">
+        <div class="slot-main">
+          <span class="slot-when">${prettyDate(di)} · ${pass.time} ${pill}</span>
+          <span class="slot-sub">${wk === 0 ? "This week" : "In " + wk + " week" + (wk>1?"s":"")}</span>
+        </div>
+        ${right}
+      </div>`;
+    }).join("");
+    return `<div class="card">
+      <h3>🏐 Court ${pass.court} · ${DAYS[pass.day]} ${pass.time} <span class="me-tag">YOUR PASS</span></h3>
+      <p class="section-note">Going away or can't make it? Put that week on the market. You keep ${100 - state.settings.commissionPct}% — the club takes ${state.settings.commissionPct}%.</p>
+      ${rows}
+    </div>`;
+  }).join("");
+
+  // earnings summary for me
+  const myBooked = state.listings.filter(l => l.status === "booked" && passById(l.passId).isMe);
+  const earned = myBooked.reduce((s,l) => s + payout(l.price), 0);
+  const owe = myBooked.reduce((s,l) => s + commission(l.price), 0);
+  let summary = "";
+  if (myBooked.length) {
+    summary = `<div class="card">
+      <h3>💰 Your swap earnings</h3>
+      <div class="settle">
+        ${myBooked.map(l => `<div class="line"><span>${prettyDate(l.dateISO)} — ${l.buyer} pays you</span><span>${fmt(l.price)}</span></div>`).join("")}
+        <div class="line"><span>Club commission you forward (${state.settings.commissionPct}%)</span><span>− ${fmt(owe)}</span></div>
+        <div class="line total"><span>You keep</span><span>${fmt(earned)}</span></div>
+      </div>
+      <p class="section-note" style="margin-top:10px">Manual settlement: the buyer pays you directly (bank transfer), and you forward the club's commission. The Owner view tracks all of this.</p>
+    </div>`;
+  }
+
+  return `<div class="view-intro"><h2>My courts</h2><p>You hold ${myPasses.length} season pass${myPasses.length>1?"es":""}. List any week you can't use it.</p></div>${cards}${summary}`;
+}
+
+// ---------- BUYER ----------
+let buyerFilter = "all";
+function renderBuyer() {
+  const avail = state.listings
+    .filter(l => l.status === "available")
+    .map(l => ({ l, pass: passById(l.passId) }))
+    .filter(x => buyerFilter === "all" || String(x.pass.day) === buyerFilter)
+    .sort((a,b) => a.l.dateISO.localeCompare(b.l.dateISO) || a.pass.time.localeCompare(b.pass.time));
+
+  const daysWithStock = [...new Set(state.listings.filter(l=>l.status==="available").map(l=>passById(l.passId).day))].sort();
+  const filters = `<div class="filters">
+    <button data-filter="all" class="${buyerFilter==='all'?'on':''}">All days</button>
+    ${daysWithStock.map(d => `<button data-filter="${d}" class="${buyerFilter==String(d)?'on':''}">${DAYS[d].slice(0,3)}</button>`).join("")}
+  </div>`;
+
+  let list;
+  if (!avail.length) {
+    list = `<div class="card"><p class="empty">No courts on the market right now. Check back soon!</p></div>`;
+  } else {
+    list = `<div class="card"><h3>📅 Available this season</h3>` + avail.map(({l, pass}) => {
+      const wk = weeksFromNow(l.dateISO);
+      return `<div class="slot-row">
+        <div class="slot-main">
+          <span class="slot-when">${prettyDate(l.dateISO)} · ${pass.time}</span>
+          <span class="slot-sub">Court ${pass.court} · ${DAYS[pass.day]} · released by ${pass.holder} · ${wk===0?"this week":"in "+wk+" wk"+(wk>1?"s":"")}</span>
+        </div>
+        <div class="slot-right">
+          <span class="price">${fmt(l.price)}</span>
+          <button class="btn teal" data-act="book" data-id="${l.id}">Book</button>
+        </div>
+      </div>`;
+    }).join("") + `</div>`;
+  }
+
+  // my bookings
+  const mine = state.listings.filter(l => l.status === "booked" && l.buyer === "Me (demo buyer)");
+  let myBookings = "";
+  if (mine.length) {
+    myBookings = `<div class="card"><h3>✅ My bookings</h3>` + mine.map(l => {
+      const pass = passById(l.passId);
+      return `<div class="slot-row">
+        <div class="slot-main">
+          <span class="slot-when">${prettyDate(l.dateISO)} · ${pass.time} <span class="pill booked">Booked</span></span>
+          <span class="slot-sub">Court ${pass.court} · pay ${fmt(l.price)} to ${pass.holder} by bank transfer</span>
+        </div>
+      </div>`;
+    }).join("") + `</div>`;
+  }
+
+  return `<div class="view-intro"><h2>Find a court</h2><p>Season-pass holders have freed up these slots. Grab one!</p></div>${filters}${list}${myBookings}`;
+}
+
+// ---------- OWNER ----------
+function renderOwner() {
+  const s = state.settings;
+  const booked = state.listings.filter(l => l.status === "booked");
+  const live = state.listings.filter(l => l.status === "available");
+  const gross = booked.reduce((a,l) => a + l.price, 0);
+  const comm = booked.reduce((a,l) => a + commission(l.price), 0);
+
+  const stats = `<div class="stats">
+    <div class="stat"><div class="n">${state.passes.length}</div><div class="l">Season passes</div></div>
+    <div class="stat"><div class="n">${live.length}</div><div class="l">On the market</div></div>
+    <div class="stat"><div class="n">${booked.length}</div><div class="l">Swaps booked</div></div>
+    <div class="stat"><div class="n">${fmt(comm)}</div><div class="l">Your commission</div></div>
+  </div>`;
+
+  const settings = `<div class="card">
+    <h3>⚙️ Marketplace settings</h3>
+    <div class="inline-edit">
+      <div>
+        <label class="field">Club name</label>
+        <input class="in" id="set-name" value="${s.courtName}">
+      </div>
+      <div>
+        <label class="field">Commission %</label>
+        <input class="in" id="set-comm" type="number" min="0" max="100" value="${s.commissionPct}">
+      </div>
+      <div>
+        <label class="field">Suggested price</label>
+        <input class="in" id="set-price" type="number" min="0" value="${s.defaultPrice}">
+      </div>
+      <button class="btn teal" data-act="save-settings">Save</button>
+    </div>
+  </div>`;
+
+  // bookings ledger
+  let ledger;
+  if (!booked.length) {
+    ledger = `<div class="card"><h3>📒 Booking ledger</h3><p class="empty">No swaps booked yet.</p></div>`;
+  } else {
+    ledger = `<div class="card"><h3>📒 Booking ledger</h3>
+      <p class="section-note">Manual settlement — buyer pays the pass-holder; the pass-holder forwards your commission.</p>
+      <table>
+        <thead><tr><th>Slot</th><th>Pass-holder</th><th>Buyer</th><th class="num">Price</th><th class="num">Your cut</th><th class="num">They keep</th></tr></thead>
+        <tbody>
+        ${booked.map(l => { const p = passById(l.passId); return `<tr>
+          <td>Ct ${p.court} · ${prettyDate(l.dateISO)} ${p.time}</td>
+          <td>${p.holder}</td>
+          <td>${l.buyer}</td>
+          <td class="num">${fmt(l.price)}</td>
+          <td class="num" style="color:var(--good);font-weight:700">${fmt(commission(l.price))}</td>
+          <td class="num">${fmt(payout(l.price))}</td>
+        </tr>`; }).join("")}
+        </tbody>
+        <tfoot><tr style="font-weight:800">
+          <td colspan="3">Total</td>
+          <td class="num">${fmt(gross)}</td>
+          <td class="num" style="color:var(--good)">${fmt(comm)}</td>
+          <td class="num">${fmt(gross-comm)}</td>
+        </tr></tfoot>
+      </table>
+    </div>`;
+  }
+
+  // who owes you
+  const bySeller = {};
+  booked.forEach(l => { const p = passById(l.passId); bySeller[p.holder] = (bySeller[p.holder]||0) + commission(l.price); });
+  const owedRows = Object.entries(bySeller).sort((a,b)=>b[1]-a[1]);
+  let owed = "";
+  if (owedRows.length) {
+    owed = `<div class="card"><h3>💵 Commission owed to you</h3>
+      ${owedRows.map(([name, amt]) => `<div class="slot-row"><div class="slot-main"><span class="slot-when">${name}</span></div><span class="price" style="color:var(--good)">${fmt(amt)}</span></div>`).join("")}
+    </div>`;
+  }
+
+  const reset = `<div style="text-align:center;margin-top:24px"><button class="reset-link" data-act="reset">Reset demo data</button></div>`;
+
+  return `<div class="view-intro"><h2>Owner dashboard</h2><p>${s.courtName} · oversee swaps, set commission, track payouts.</p></div>${stats}${settings}${ledger}${owed}${reset}`;
+}
+
+// =====================================================
+//  WIRING / ACTIONS
+// =====================================================
+function wire() {
+  document.querySelectorAll("[data-act]").forEach(el => {
+    el.addEventListener("click", () => handleAct(el.dataset));
+  });
+  document.querySelectorAll("[data-filter]").forEach(el => {
+    el.addEventListener("click", () => { buyerFilter = el.dataset.filter; render(); });
+  });
+}
+
+function handleAct(d) {
+  const act = d.act;
+  if (act === "list") openListModal(d.pass, d.date);
+  else if (act === "withdraw") { withdraw(d.id); }
+  else if (act === "book") openBookModal(d.id);
+  else if (act === "save-settings") saveSettings();
+  else if (act === "reset") { if (confirm("Reset all demo data to the starting example?")) { store.remove(STORAGE_KEY); state = load(); render(); toast("Demo reset"); } }
+}
+
+function openListModal(passId, dateISO) {
+  const pass = passById(passId);
+  openModal(`
+    <h3>Put your court on the market</h3>
+    <div class="sub">Court ${pass.court} · ${prettyDate(dateISO)} · ${pass.time}</div>
+    <label class="field">Asking price (${state.settings.currency})</label>
+    <input class="in" id="list-price" type="number" min="0" value="${state.settings.defaultPrice}">
+    <div class="settle" id="list-settle"></div>
+    <div class="modal-actions">
+      <button class="btn ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn primary" id="list-confirm">List it</button>
+    </div>
+  `);
+  const inp = document.getElementById("list-price");
+  const upd = () => {
+    const p = parseFloat(inp.value) || 0;
+    document.getElementById("list-settle").innerHTML =
+      `<div class="line"><span>Buyer pays</span><span>${fmt(p)}</span></div>
+       <div class="line"><span>Club commission (${state.settings.commissionPct}%)</span><span>− ${fmt(commission(p))}</span></div>
+       <div class="line total"><span>You keep</span><span>${fmt(payout(p))}</span></div>`;
+  };
+  inp.addEventListener("input", upd); upd();
+  document.getElementById("list-confirm").addEventListener("click", () => {
+    const price = parseFloat(inp.value) || 0;
+    if (price <= 0) { toast("Enter a price"); return; }
+    state.listings.push({ id: "l_"+passId+"_"+dateISO, passId, dateISO, price, status: "available", buyer: null, bookedAt: null });
+    save(); closeModal(); render(); toast("Listed on the market 🏐");
+  });
+}
+
+function withdraw(id) {
+  const l = state.listings.find(x => x.id === id);
+  if (l) { l.status = "withdrawn"; save(); render(); toast("Taken off the market"); }
+}
+
+function openBookModal(id) {
+  const l = state.listings.find(x => x.id === id);
+  const pass = passById(l.passId);
+  openModal(`
+    <h3>Book this court</h3>
+    <div class="sub">Court ${pass.court} · ${prettyDate(l.dateISO)} · ${pass.time}</div>
+    <label class="field">Your name</label>
+    <input class="in" id="book-name" placeholder="e.g. Sam" value="Me (demo buyer)">
+    <div class="settle">
+      <div class="line"><span>You pay ${pass.holder}</span><span>${fmt(l.price)}</span></div>
+      <div class="line"><span>(of which club commission)</span><span>${fmt(commission(l.price))}</span></div>
+      <div class="line total"><span>Total due (bank transfer)</span><span>${fmt(l.price)}</span></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn teal" id="book-confirm">Confirm booking</button>
+    </div>
+  `);
+  document.getElementById("book-confirm").addEventListener("click", () => {
+    const name = (document.getElementById("book-name").value || "").trim() || "Anonymous";
+    l.status = "booked"; l.buyer = name; l.bookedAt = iso(todayMidnight());
+    save(); closeModal(); render(); toast("Booked! ✅ Pay by bank transfer.");
+  });
+}
+
+function saveSettings() {
+  state.settings.courtName = document.getElementById("set-name").value || state.settings.courtName;
+  state.settings.commissionPct = Math.max(0, Math.min(100, parseFloat(document.getElementById("set-comm").value) || 0));
+  state.settings.defaultPrice = Math.max(0, parseFloat(document.getElementById("set-price").value) || 0);
+  save(); render(); toast("Settings saved");
+}
+
+// role switch
+document.querySelectorAll("#roles button").forEach(b =>
+  b.addEventListener("click", () => { state.role = b.dataset.role; save(); render(); }));
+
+render();
+</script>
+</body>
+</html>
