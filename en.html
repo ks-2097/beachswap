@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BeachSwap — Kein gebuchter Platz bleibt mehr leer</title>
-<meta name="description" content="Du kannst deinen wöchentlichen Beachvolleyball-Platz nicht nutzen? Stell ihn wieder ein. Andere buchen ihn, du bekommst dein Geld zurück, der Verein verdient mit. Win-win-win.">
-<meta property="og:title" content="BeachSwap — Kein gebuchter Platz bleibt mehr leer">
-<meta property="og:description" content="Stell deinen ungenutzten Beachvolleyball-Platz wieder ein. Andere buchen ihn, du bekommst dein Geld zurück, der Verein erhält eine Provision.">
+<title>BeachSwap — Never waste a booked court again</title>
+<meta name="description" content="Can't make your weekly beach volleyball court? Put it back on the market. Players grab the slot, you recover your costs, the club earns a cut. Win–win–win.">
+<meta property="og:title" content="BeachSwap — Never waste a booked court again">
+<meta property="og:description" content="Put your unused beach volleyball court back on the market. Players book it, you recover your costs, the club takes a cut.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%23ff6b4a'/%3E%3Cpath d='M50 4a46 46 0 0 1 0 92M50 4a46 46 0 0 0 0 92M8 38h84M8 62h84' fill='none' stroke='%23fff' stroke-width='5'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Non-render-blocking: page shows instantly with system fonts, upgrades to web fonts if/when they load (and never hangs offline). -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Outfit:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" id="webfont">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Outfit:wght@400;500;600;700&display=swap"></noscript>
 <style>
@@ -39,6 +40,7 @@
   .view{animation:fade .4s ease}
   @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
+  /* ---------- buttons ---------- */
   .btn{font-family:var(--body);font-weight:600;font-size:15px;border:none;border-radius:999px;padding:13px 24px;cursor:pointer;
        display:inline-flex;align-items:center;gap:8px;transition:.18s;white-space:nowrap}
   .btn.lg{padding:16px 30px;font-size:16.5px}
@@ -53,6 +55,7 @@
   .btn-soft:hover{background:#e9e1cd}
   .btn:disabled{opacity:.45;cursor:default;transform:none!important;box-shadow:none}
 
+  /* ---------- nav ---------- */
   nav.topbar{position:sticky;top:0;z-index:40;backdrop-filter:blur(12px);background:rgba(255,246,233,.82);border-bottom:1px solid rgba(236,225,205,.7)}
   .topbar .inner{display:flex;align-items:center;justify-content:space-between;height:66px}
   .logo{display:flex;align-items:center;gap:11px;cursor:pointer}
@@ -66,6 +69,7 @@
   .lang:hover{border-color:var(--coral)}
   @media(max-width:760px){.navlinks a.nav-hide{display:none}}
 
+  /* ---------- hero ---------- */
   .hero{position:relative;overflow:hidden;
     background:linear-gradient(180deg,#7fdcef 0%,#bfe9f0 30%,#ffe2bf 62%,#ffd79e 100%)}
   .hero .sun{position:absolute;top:8%;right:12%;width:150px;height:150px;border-radius:50%;
@@ -76,13 +80,14 @@
   .hero .inner{position:relative;z-index:2;padding:64px 0 150px;display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
   .eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.9);
     color:var(--ocean-deep);font-weight:600;font-size:13.5px;padding:7px 15px;border-radius:999px;margin-bottom:20px;box-shadow:var(--shadow-sm)}
-  .hero h1{font-size:clamp(36px,5.2vw,60px);font-weight:800;color:var(--ink)}
-  .hero h1 .hl{position:relative;color:var(--coral)}
-  .hero p.lead{font-size:clamp(17px,2vw,20px);color:var(--ink-soft);margin:20px 0 30px;max-width:540px;font-weight:400}
+  .hero h1{font-size:clamp(38px,5.4vw,62px);font-weight:800;color:var(--ink)}
+  .hero h1 .hl{position:relative;color:var(--coral);white-space:nowrap}
+  .hero p.lead{font-size:clamp(17px,2vw,20px);color:var(--ink-soft);margin:20px 0 30px;max-width:520px;font-weight:400}
   .hero .cta-row{display:flex;gap:14px;flex-wrap:wrap}
   .hero .trust{margin-top:26px;display:flex;align-items:center;gap:18px;color:var(--ink-soft);font-size:14px;font-weight:500;flex-wrap:wrap}
   .trust .dot{width:5px;height:5px;border-radius:50%;background:var(--coral)}
 
+  /* hero card mockup */
   .hero-card{position:relative;background:var(--paper);border-radius:var(--r-lg);box-shadow:var(--shadow-lg);padding:22px;transform:rotate(-2deg);border:1px solid var(--line)}
   .hero-card:before{content:"";position:absolute;inset:0;border-radius:var(--r-lg);box-shadow:inset 0 0 0 1px rgba(255,255,255,.6)}
   .hc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
@@ -105,13 +110,15 @@
     .hero .sun{width:100px;height:100px;top:4%;right:6%}
   }
 
+  /* ---------- generic section ---------- */
   section.band{padding:78px 0}
   .band.tint{background:var(--paper)}
-  .sec-head{text-align:center;max-width:700px;margin:0 auto 48px}
+  .sec-head{text-align:center;max-width:680px;margin:0 auto 48px}
   .sec-head .kicker{font-weight:700;color:var(--coral);text-transform:uppercase;letter-spacing:.14em;font-size:13px;margin-bottom:12px}
   .sec-head h2{font-size:clamp(28px,3.6vw,42px);font-weight:800}
   .sec-head p{color:var(--ink-soft);font-size:17px;margin-top:14px}
 
+  /* steps */
   .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
   .step{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:30px 26px;box-shadow:var(--shadow-sm);transition:.2s}
   .step:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
@@ -124,6 +131,7 @@
   .step .ico{font-size:26px;position:absolute;top:28px;right:26px;opacity:.9}
   @media(max-width:760px){.steps{grid-template-columns:1fr}}
 
+  /* three wins */
   .wins{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
   .win{border-radius:var(--r-lg);padding:30px 26px;color:#fff;position:relative;overflow:hidden;min-height:230px;display:flex;flex-direction:column;justify-content:flex-end;box-shadow:var(--shadow)}
   .win:nth-child(1){background:linear-gradient(150deg,var(--coral),var(--pink))}
@@ -135,21 +143,26 @@
   .win .who{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;opacity:.85;margin-bottom:6px}
   @media(max-width:760px){.wins{grid-template-columns:1fr}}
 
+  /* stats strip */
   .statstrip{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:8px}
   .bigstat{text-align:center;padding:8px}
   .bigstat .n{font-family:var(--display);font-weight:800;font-size:clamp(30px,4vw,46px);background:linear-gradient(135deg,var(--coral),var(--ocean-deep));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
   .bigstat .l{color:var(--ink-soft);font-size:14px;font-weight:500;margin-top:4px}
   @media(max-width:620px){.statstrip{grid-template-columns:repeat(2,1fr);gap:26px}}
 
+  /* CTA band */
   .cta-band{position:relative;overflow:hidden;border-radius:28px;padding:56px;text-align:center;color:#fff;
     background:linear-gradient(125deg,var(--ocean-deep),var(--teal) 55%,var(--coral))}
   .cta-band h2{font-size:clamp(26px,3.4vw,40px);font-weight:800;margin-bottom:14px}
-  .cta-band p{font-size:17px;opacity:.95;max-width:560px;margin:0 auto 26px}
+  .cta-band p{font-size:17px;opacity:.95;max-width:520px;margin:0 auto 26px}
   .cta-band .sun2{position:absolute;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.35),transparent 70%);top:-60px;right:-30px}
 
   footer{padding:46px 0;color:var(--muted);font-size:14px;border-top:1px solid var(--line);background:var(--paper)}
   footer .inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
 
+  /* =========================================================
+     APP
+  ========================================================= */
   #appview{min-height:100vh;background:linear-gradient(180deg,var(--sand) 0%,#fffaf0 100%)}
   .apptoolbar{position:sticky;top:0;z-index:30;background:rgba(255,246,233,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
   .apptoolbar .inner{display:flex;align-items:center;justify-content:space-between;gap:14px;height:64px}
@@ -197,6 +210,7 @@
   .settle .line{display:flex;justify-content:space-between;padding:4px 0}
   .settle .line.total{font-weight:800;border-top:1px solid var(--line);margin-top:6px;padding-top:8px}
   .reset-link{background:none;border:none;color:var(--muted);font-size:12.5px;cursor:pointer;text-decoration:underline}
+  /* modal */
   .modal-bg{position:fixed;inset:0;background:rgba(20,42,46,.5);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;padding:18px;z-index:60;animation:fade .2s}
   .modal{background:var(--paper);border-radius:var(--r-lg);padding:26px;width:100%;max-width:430px;box-shadow:var(--shadow-lg)}
   .modal h3{font-size:21px;margin-bottom:5px;font-weight:800}
@@ -226,114 +240,120 @@
         <b>Beach<span>Swap</span></b>
       </div>
       <div class="navlinks">
-        <a href="#how" class="nav-hide">So funktioniert's</a>
-        <a href="#why" class="nav-hide">Warum es funktioniert</a>
-        <a href="#owner" class="nav-hide">Für Betreiber</a>
-        <a href="en.html" class="lang" title="English version">EN</a>
-        <button class="btn btn-coral sm" onclick="enterApp('buyer')">App öffnen</button>
+        <a href="#how" class="nav-hide">How it works</a>
+        <a href="#why" class="nav-hide">Why it works</a>
+        <a href="#owner" class="nav-hide">For clubs</a>
+        <a href="index.html" class="lang" title="Deutsche Version">DE</a>
+        <button class="btn btn-coral sm" onclick="enterApp('buyer')">Open the app</button>
       </div>
     </div>
   </nav>
 
+  <!-- HERO -->
   <header class="hero">
     <div class="sun"></div>
     <div class="wrap inner">
       <div>
-        <span class="eyebrow">🏐 Für Inhaber einer Beachvolleyball-Saisonkarte</span>
-        <h1>Dein Platz bleibt leer?<br><span class="hl">Gib ihn frei – statt draufzuzahlen.</span></h1>
-        <p class="lead">Im Urlaub, verletzt oder einfach keine Zeit für deinen wöchentlichen Slot? Stell deinen gebuchten Platz mit zwei Klicks wieder ein. Jemand anderes bucht ihn, du bekommst den Großteil deines Geldes zurück, und der Verein verdient mit.</p>
+        <span class="eyebrow">🏐 For beach volleyball season-pass holders</span>
+        <h1>Your court's empty?<br><span class="hl">Swap it, don't waste it.</span></h1>
+        <p class="lead">Away, injured, or just can't make your weekly slot? Put your booked court back on the market in two taps. A player grabs it, you recover your costs, the club earns a cut.</p>
         <div class="cta-row">
-          <button class="btn btn-coral lg" onclick="enterApp('seller')">Meinen Platz anbieten →</button>
-          <button class="btn btn-ghost lg" onclick="enterApp('buyer')">Freien Platz finden</button>
+          <button class="btn btn-coral lg" onclick="enterApp('seller')">List my court →</button>
+          <button class="btn btn-ghost lg" onclick="enterApp('buyer')">Find a court to play</button>
         </div>
         <div class="trust">
-          <span>💸 Bis zu 85 % zurück</span><span class="dot"></span>
-          <span>⚡ In 2 Klicks angeboten</span><span class="dot"></span>
-          <span>🤝 Keine App nötig</span>
+          <span>💸 Recover up to 85%</span><span class="dot"></span>
+          <span>⚡ Listed in 2 taps</span><span class="dot"></span>
+          <span>🤝 No app to install</span>
         </div>
       </div>
       <div class="hero-col-img">
         <div class="hero-card">
-          <div class="float-badge fb-1"><span class="emoji">🏐</span><span>Platz 12 ist frei!</span></div>
-          <div class="float-badge fb-2"><span class="emoji">🎉</span><span>Du behältst <span class="k">34 €</span></span></div>
-          <div class="hc-head"><span class="t">Dienstag 18:00</span><span class="hc-tag">Verfügbar</span></div>
-          <div class="hc-slot"><div><div class="when">Platz 12 · Di 18:00</div><div class="sub">Freigegeben von Kai · diese Woche</div></div><span class="price">40 €</span></div>
-          <div class="hc-slot"><div><div class="when">Platz 3 · Mo 17:00</div><div class="sub">Gebucht von Lena</div></div><span class="hc-pill">Gebucht</span></div>
-          <div class="hc-slot"><div><div class="when">Platz 18 · Sa 10:00</div><div class="sub">Freigegeben von Sofia · in 2 Wo.</div></div><span class="price">45 €</span></div>
+          <div class="float-badge fb-1"><span class="emoji">🏐</span><span>Court 12 freed up!</span></div>
+          <div class="float-badge fb-2"><span class="emoji">🎉</span><span>You keep <span class="k">€34</span></span></div>
+          <div class="hc-head"><span class="t">Tuesday 6:00 PM</span><span class="hc-tag">On the market</span></div>
+          <div class="hc-slot"><div><div class="when">Court 12 · Tue 6pm</div><div class="sub">Released by Kai · this week</div></div><span class="price">€40</span></div>
+          <div class="hc-slot"><div><div class="when">Court 3 · Mon 5pm</div><div class="sub">Booked by Lena</div></div><span class="hc-pill">Booked</span></div>
+          <div class="hc-slot"><div><div class="when">Court 18 · Sat 10am</div><div class="sub">Released by Sofia · in 2 wks</div></div><span class="price">€45</span></div>
         </div>
       </div>
     </div>
     <svg class="waves" viewBox="0 0 1440 90" preserveAspectRatio="none"><path fill="#fff6e9" d="M0 48c180 36 360 36 540 12s360-48 540-30 240 30 360 30v30H0z"/></svg>
   </header>
 
+  <!-- HOW -->
   <section class="band" id="how">
     <div class="wrap">
       <div class="sec-head">
-        <div class="kicker">So funktioniert's</div>
-        <h2>In drei Schritten vom leeren Platz zur Win-win-win-Situation</h2>
-        <p>BeachSwap macht aus einem Slot, den du ohnehin verlierst, Geld zurück in deiner Tasche – und ein Spiel für jemand anderen.</p>
+        <div class="kicker">How it works</div>
+        <h2>Three taps from empty court to everyone winning</h2>
+        <p>BeachSwap turns a slot you'd lose anyway into cash back in your pocket — and a game for someone else.</p>
       </div>
       <div class="steps">
-        <div class="step"><div class="n">1</div><span class="ico">📅</span><h3>Gib die Woche frei, in der du fehlst</h3><p>Verreist? Tippe auf deinen Slot, leg einen Preis fest, und er ist sofort für den ganzen Verein sichtbar.</p></div>
-        <div class="step"><div class="n">2</div><span class="ico">🤙</span><h3>Jemand bucht ihn</h3><p>Mitglieder stöbern in freien Plätzen und schnappen sich die Zeit, die ihnen passt – dein Platz bleibt nicht leer.</p></div>
-        <div class="step"><div class="n">3</div><span class="ico">💰</span><h3>Alle werden bezahlt</h3><p>Du bekommst den Großteil deiner Kosten zurück, der Verein erhält eine kleine Provision, und die andere Person bekommt ein Spiel. Win-win-win.</p></div>
+        <div class="step"><div class="n">1</div><span class="ico">📅</span><h3>List the week you're out</h3><p>Going on holiday? Tap your slot, set a price, and it goes live to the whole club instantly.</p></div>
+        <div class="step"><div class="n">2</div><span class="ico">🤙</span><h3>A player books it</h3><p>Members browse freed-up courts and grab the time that suits them — your slot doesn't sit empty.</p></div>
+        <div class="step"><div class="n">3</div><span class="ico">💰</span><h3>Everyone gets paid</h3><p>You recover most of your cost, the club takes a small cut, and the player gets a game. Win–win–win.</p></div>
       </div>
     </div>
   </section>
 
+  <!-- WHY -->
   <section class="band tint" id="why">
     <div class="wrap">
       <div class="sec-head">
-        <div class="kicker">Warum es funktioniert</div>
-        <h2>Ein leerer Platz. Drei zufriedene Menschen.</h2>
+        <div class="kicker">Why it works</div>
+        <h2>One empty court. Three happy people.</h2>
       </div>
       <div class="wins">
-        <div class="win"><div class="big">🏖️</div><div class="who">Saisonkarten-Inhaber</div><h3>Schluss mit Zahlen für nichts</h3><p>Hol dir den Großteil deiner Wochenkosten zurück, wann immer das Leben dazwischenkommt. Kein totes Geld mehr.</p></div>
-        <div class="win"><div class="big">🏐</div><div class="who">Spieler</div><h3>Schnapp dir einen Platz, jederzeit</h3><p>Keine Saisonkarte? Sichere dir einen Top-Slot, der gerade frei wurde – dieselben Plätze, ohne Jahresbindung.</p></div>
-        <div class="win"><div class="big">🏆</div><div class="who">Der Verein</div><h3>Verdiene an jedem Tausch</h3><p>Eine Provision auf jede Buchung, vollere Plätze, zufriedenere Mitglieder – nur Vorteile, ohne Mehraufwand.</p></div>
+        <div class="win"><div class="big">🏖️</div><div class="who">Pass-holders</div><h3>Stop paying for nothing</h3><p>Recover most of what your weekly slot costs whenever life gets in the way. No more dead money.</p></div>
+        <div class="win"><div class="big">🏐</div><div class="who">Players</div><h3>Grab a court, anytime</h3><p>No season pass? Snag a prime slot that just opened up — same courts, no year-long commitment.</p></div>
+        <div class="win"><div class="big">🏆</div><div class="who">The club</div><h3>Earn on every swap</h3><p>A cut of every booking, fuller courts, happier members — pure upside with zero extra admin.</p></div>
       </div>
     </div>
   </section>
 
+  <!-- STATS -->
   <section class="band">
     <div class="wrap">
       <div class="sec-head" style="margin-bottom:30px">
-        <div class="kicker">Die Chance</div>
-        <h2>Eine Anlage mit 40 Plätzen lässt echtes Geld im Sand liegen</h2>
+        <div class="kicker">The opportunity</div>
+        <h2>A 40-court club leaves real money on the sand</h2>
       </div>
       <div class="statstrip">
-        <div class="bigstat"><div class="n">40</div><div class="l">Plätze mit Saisonkarten</div></div>
-        <div class="bigstat"><div class="n">~6</div><div class="l">stehen meist leer</div></div>
-        <div class="bigstat"><div class="n">35 €</div><div class="l">durchschnittlicher Slot-Wert</div></div>
-        <div class="bigstat"><div class="n">1.600 €+</div><div class="l">rückholbar pro Monat*</div></div>
+        <div class="bigstat"><div class="n">40</div><div class="l">courts with weekly passes</div></div>
+        <div class="bigstat"><div class="n">~6</div><div class="l">sit empty most weeks</div></div>
+        <div class="bigstat"><div class="n">€35</div><div class="l">average slot value</div></div>
+        <div class="bigstat"><div class="n">€1.6k+</div><div class="l">recoverable per month*</div></div>
       </div>
-      <p style="text-align:center;color:var(--muted);font-size:13px;margin-top:22px">*Beispielrechnung: 6 leere Slots/Woche × 35 € × ~4,3 Wochen × 70 % Belegung. Die echten Zahlen variieren – der Punkt ist: Es ist nicht null.</p>
+      <p style="text-align:center;color:var(--muted);font-size:13px;margin-top:22px">*Illustrative: 6 empty slots/week × €35 × ~4.3 weeks × 70% fill. Real numbers will vary — the point is it's not zero.</p>
     </div>
   </section>
 
+  <!-- OWNER -->
   <section class="band tint" id="owner">
     <div class="wrap">
       <div class="cta-band">
         <div class="sun2"></div>
-        <h2>Du betreibst die Anlage? Das ist geschenktes Geld.</h2>
-        <p>Mitglieder zahlen ohnehin für Plätze, die sie nicht immer nutzen können. BeachSwap füllt diese Slots und überweist dir eine Provision auf jeden Tausch – mit einem Dashboard, das jeden Euro erfasst. Du legst den Satz selbst fest.</p>
-        <button class="btn btn-soft lg" onclick="enterApp('owner')" style="background:#fff;color:var(--ink)">Zum Betreiber-Dashboard →</button>
+        <h2>Run the club? This is found money.</h2>
+        <p>Members already pay for courts they can't always use. BeachSwap fills those slots and sends you a commission on every swap — with a dashboard that tracks every dollar. Set your own rate.</p>
+        <button class="btn btn-soft lg" onclick="enterApp('owner')" style="background:#fff;color:var(--ink)">See the owner dashboard →</button>
       </div>
     </div>
   </section>
 
+  <!-- FINAL CTA -->
   <section class="band">
     <div class="wrap" style="text-align:center">
-      <h2 style="font-size:clamp(28px,4vw,44px);font-weight:800;margin-bottom:16px">Bereit, deinen ersten Platz zu tauschen?</h2>
-      <p style="color:var(--ink-soft);font-size:18px;margin-bottom:28px">Keine Anmeldung nötig. Öffnen, ausprobieren, teilen.</p>
-      <button class="btn btn-coral lg" onclick="enterApp('seller')">BeachSwap öffnen →</button>
+      <h2 style="font-size:clamp(28px,4vw,44px);font-weight:800;margin-bottom:16px">Ready to swap your first court?</h2>
+      <p style="color:var(--ink-soft);font-size:18px;margin-bottom:28px">No sign-up wall. Open it, try it, share it.</p>
+      <button class="btn btn-coral lg" onclick="enterApp('seller')">Open BeachSwap →</button>
     </div>
   </section>
 
   <footer>
     <div class="wrap inner">
       <div class="logo" style="cursor:default"><svg class="ball" viewBox="0 0 100 100" style="width:26px;height:26px"><circle cx="50" cy="50" r="47" fill="#ff5e3a"/><path d="M50 3a47 47 0 0 1 0 94M50 3a47 47 0 0 0 0 94M5 35h90M5 65h90" fill="none" stroke="#fff" stroke-width="5"/></svg><b style="font-size:17px">Beach<span>Swap</span></b></div>
-      <span>Win-win-win für die Berliner Beachvolleyball-Community · Prototyp · <a href="en.html" style="color:var(--coral);font-weight:600">English</a></span>
+      <span>Win–win–win for the Berlin beach volleyball community · Prototype · <a href="index.html" style="color:var(--coral);font-weight:600">Deutsch</a></span>
     </div>
   </footer>
 </div>
@@ -347,9 +367,9 @@
         <b>Beach<span>Swap</span></b>
       </div>
       <div class="roles" id="roles">
-        <button data-role="seller">Meine Plätze</button>
-        <button data-role="buyer">Platz finden</button>
-        <button data-role="owner">Betreiber</button>
+        <button data-role="seller">My courts</button>
+        <button data-role="buyer">Find a court</button>
+        <button data-role="owner">Owner</button>
       </div>
     </div>
   </div>
@@ -361,17 +381,17 @@
 
 <script>
 /* ============================================================
-   BeachSwap — Prototyp. Eine Datei, offline-sicher.
-   Manuelle Abrechnung: Die App erfasst Buchungen + wer wem was
-   schuldet; bezahlt wird per Überweisung. Daten lokal gespeichert.
+   BeachSwap — prototype. Single-file, offline-safe.
+   Manual/offline payments: the app tracks bookings + who-owes-
+   whom; people settle by bank transfer. Data persists locally.
 ============================================================ */
 const STORAGE_KEY="beachswap_v2";
-const DAYS=["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"];
-const DAYS_SHORT=["So","Mo","Di","Mi","Do","Fr","Sa"];
-const MONTHS=["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"];
-const fmt=n=>{let s=n.toFixed(2).replace(".",",").replace(/,00$/,"");return s+" €";};
+const DAYS=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const MONTHS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const fmt=n=>"€"+n.toFixed(2).replace(/\.00$/,"");
 const WEEKS_AHEAD=8;
 
+/* ---- safe storage (file:// / private mode can block localStorage) ---- */
 const store={
   get(k){try{return localStorage.getItem(k)}catch(e){return null}},
   set(k,v){try{localStorage.setItem(k,v)}catch(e){}},
@@ -380,25 +400,25 @@ const store={
 
 function seed(){
   const passes=[
-    {id:"p_me", holder:"Du",            court:12,day:2,time:"18:00",isMe:true},
-    {id:"p_01",holder:"Lena Becker",    court:3, day:1,time:"17:00",isMe:false},
-    {id:"p_02",holder:"Jonas Weber",    court:7, day:1,time:"19:00",isMe:false},
-    {id:"p_03",holder:"Mia Hoffmann",   court:21,day:2,time:"07:00",isMe:false},
-    {id:"p_04",holder:"Leon Schmidt",   court:5, day:3,time:"18:00",isMe:false},
-    {id:"p_05",holder:"Sophie Wagner",  court:14,day:3,time:"20:00",isMe:false},
+    {id:"p_me", holder:"You",           court:12,day:2,time:"18:00",isMe:true},
+    {id:"p_01",holder:"Lena Becker", court:3, day:1,time:"17:00",isMe:false},
+    {id:"p_02",holder:"Jonas Weber",     court:7, day:1,time:"19:00",isMe:false},
+    {id:"p_03",holder:"Mia Hoffmann",     court:21,day:2,time:"07:00",isMe:false},
+    {id:"p_04",holder:"Leo Schmidt",    court:5, day:3,time:"18:00",isMe:false},
+    {id:"p_05",holder:"Sophie Wagner",     court:14,day:3,time:"20:00",isMe:false},
     {id:"p_06",holder:"Tom Fischer",    court:9, day:4,time:"18:00",isMe:false},
-    {id:"p_07",holder:"Hannah Krüger",  court:30,day:4,time:"19:00",isMe:false},
-    {id:"p_08",holder:"Jan Schulz",     court:2, day:5,time:"17:00",isMe:false},
-    {id:"p_09",holder:"Sofia Richter",  court:18,day:6,time:"10:00",isMe:false},
-    {id:"p_10",holder:"Noah Klein",     court:25,day:6,time:"11:00",isMe:false},
-    {id:"p_11",holder:"Emma Lange",     court:11,day:0,time:"09:00",isMe:false}
+    {id:"p_07",holder:"Hannah Krüger",      court:30,day:4,time:"19:00",isMe:false},
+    {id:"p_08",holder:"Jan Schulz",   court:2, day:5,time:"17:00",isMe:false},
+    {id:"p_09",holder:"Sofia Richter",    court:18,day:6,time:"10:00",isMe:false},
+    {id:"p_10",holder:"Noah Klein",    court:25,day:6,time:"11:00",isMe:false},
+    {id:"p_11",holder:"Emma Lange",    court:11,day:0,time:"09:00",isMe:false}
   ];
   return {settings:{courtName:"Beach Mitte Berlin",commissionPct:15,defaultPrice:35,currency:"EUR"},passes,listings:[],role:"seller"};
 }
 function todayMidnight(){const d=new Date();d.setHours(0,0,0,0);return d}
 function nextDatesFor(dow,count){const out=[],d=todayMidnight();d.setDate(d.getDate()+((dow-d.getDay()+7)%7));for(let i=0;i<count;i++){out.push(new Date(d));d.setDate(d.getDate()+7)}return out}
 function iso(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
-function prettyDate(s){const[y,m,da]=s.split("-").map(Number);const d=new Date(y,m-1,da);return DAYS_SHORT[d.getDay()]+" "+da+". "+MONTHS[m-1]}
+function prettyDate(s){const[y,m,da]=s.split("-").map(Number);const d=new Date(y,m-1,da);return DAYS[d.getDay()].slice(0,3)+" "+da+" "+MONTHS[m-1]}
 function weeksFromNow(s){const[y,m,da]=s.split("-").map(Number);const d=new Date(y,m-1,da);d.setHours(0,0,0,0);return Math.round((d-todayMidnight())/(6048e5))}
 
 let state=load();
@@ -421,9 +441,11 @@ function toast(m){const t=document.getElementById("toast");t.textContent=m;t.cla
 function closeModal(){document.getElementById("modal-root").innerHTML=""}
 function openModal(h){const r=document.getElementById("modal-root");r.innerHTML=`<div class="modal-bg" id="modal-bg"><div class="modal">${h}</div></div>`;document.getElementById("modal-bg").addEventListener("click",e=>{if(e.target.id==="modal-bg")closeModal()})}
 
+/* ---------- router ---------- */
 function enterApp(role){state.role=role||state.role||"seller";save();document.getElementById("home").classList.add("hidden");document.getElementById("appview").classList.remove("hidden");window.scrollTo(0,0);render()}
 function goHome(){document.getElementById("appview").classList.add("hidden");document.getElementById("home").classList.remove("hidden");window.scrollTo(0,0)}
 
+/* ---------- render ---------- */
 function render(){
   document.querySelectorAll("#roles button").forEach(b=>b.classList.toggle("active",b.dataset.role===state.role));
   const app=document.getElementById("app");
@@ -436,48 +458,48 @@ function renderSeller(){
   const cards=mine.map(pass=>{
     const rows=nextDatesFor(pass.day,WEEKS_AHEAD).map(d=>{
       const di=iso(d),wk=weeksFromNow(di),l=listingFor(pass.id,di);let pill,right;
-      if(l&&l.status==="booked"){pill=`<span class="pill booked">Gebucht</span>`;right=`<div class="slot-right"><span class="slot-sub">${l.buyer} · du erhältst ${fmt(payout(l.price))}</span></div>`}
-      else if(l&&l.status==="available"){pill=`<span class="pill listed">Am Markt · ${fmt(l.price)}</span>`;right=`<div class="slot-right"><button class="btn btn-soft sm" data-act="withdraw" data-id="${l.id}">Zurückziehen</button></div>`}
-      else{pill=`<span class="pill yours">Deiner</span>`;right=`<div class="slot-right"><button class="btn btn-coral sm" data-act="list" data-pass="${pass.id}" data-date="${di}">Anbieten</button></div>`}
-      return `<div class="slot-row"><div class="slot-main"><span class="slot-when">${prettyDate(di)} · ${pass.time} ${pill}</span><span class="slot-sub">${wk===0?"Diese Woche":"In "+wk+" Woche"+(wk>1?"n":"")}</span></div>${right}</div>`;
+      if(l&&l.status==="booked"){pill=`<span class="pill booked">Booked</span>`;right=`<div class="slot-right"><span class="slot-sub">${l.buyer} · you get ${fmt(payout(l.price))}</span></div>`}
+      else if(l&&l.status==="available"){pill=`<span class="pill listed">On market · ${fmt(l.price)}</span>`;right=`<div class="slot-right"><button class="btn btn-soft sm" data-act="withdraw" data-id="${l.id}">Take down</button></div>`}
+      else{pill=`<span class="pill yours">Yours</span>`;right=`<div class="slot-right"><button class="btn btn-coral sm" data-act="list" data-pass="${pass.id}" data-date="${di}">Put on market</button></div>`}
+      return `<div class="slot-row"><div class="slot-main"><span class="slot-when">${prettyDate(di)} · ${pass.time} ${pill}</span><span class="slot-sub">${wk===0?"This week":"In "+wk+" week"+(wk>1?"s":"")}</span></div>${right}</div>`;
     }).join("");
-    return `<div class="card"><h3>🏐 Platz ${pass.court} · ${DAYS[pass.day]} ${pass.time} <span class="me-tag">DEIN PASS</span></h3><p class="section-note">Verreist oder keine Zeit? Biete diese Woche an. Du behältst ${100-state.settings.commissionPct} % – der Verein erhält ${state.settings.commissionPct} %.</p>${rows}</div>`;
+    return `<div class="card"><h3>🏐 Court ${pass.court} · ${DAYS[pass.day]} ${pass.time} <span class="me-tag">YOUR PASS</span></h3><p class="section-note">Away or can't make it? List that week. You keep ${100-state.settings.commissionPct}% — the club takes ${state.settings.commissionPct}%.</p>${rows}</div>`;
   }).join("");
   const booked=state.listings.filter(l=>l.status==="booked"&&passById(l.passId).isMe);
   let summary="";
   if(booked.length){const earned=booked.reduce((s,l)=>s+payout(l.price),0),owe=booked.reduce((s,l)=>s+commission(l.price),0);
-    summary=`<div class="card"><h3>💰 Deine Tausch-Einnahmen</h3><div class="settle">${booked.map(l=>`<div class="line"><span>${prettyDate(l.dateISO)} — ${l.buyer} zahlt dir</span><span>${fmt(l.price)}</span></div>`).join("")}<div class="line"><span>Vereinsprovision, die du weiterleitest (${state.settings.commissionPct} %)</span><span>− ${fmt(owe)}</span></div><div class="line total"><span>Du behältst</span><span>${fmt(earned)}</span></div></div><p class="section-note" style="margin-top:10px">Manuelle Abrechnung: Der Käufer zahlt dir direkt, und du leitest die Vereinsprovision weiter. Die Betreiber-Ansicht erfasst alles.</p></div>`}
-  return `<div class="view-intro"><h2>Meine Plätze</h2><p>Du hast ${mine.length} Saisonkarte${mine.length>1?"n":""}. Biete jede Woche an, die du nicht nutzen kannst.</p></div>${cards}${summary}`;
+    summary=`<div class="card"><h3>💰 Your swap earnings</h3><div class="settle">${booked.map(l=>`<div class="line"><span>${prettyDate(l.dateISO)} — ${l.buyer} pays you</span><span>${fmt(l.price)}</span></div>`).join("")}<div class="line"><span>Club commission you forward (${state.settings.commissionPct}%)</span><span>− ${fmt(owe)}</span></div><div class="line total"><span>You keep</span><span>${fmt(earned)}</span></div></div><p class="section-note" style="margin-top:10px">Manual settlement: the buyer pays you directly, and you forward the club's commission. The Owner view tracks it all.</p></div>`}
+  return `<div class="view-intro"><h2>My courts</h2><p>You hold ${mine.length} season pass${mine.length>1?"es":""}. List any week you can't use it.</p></div>${cards}${summary}`;
 }
 
 let buyerFilter="all";
 function renderBuyer(){
   const avail=state.listings.filter(l=>l.status==="available").map(l=>({l,pass:passById(l.passId)})).filter(x=>buyerFilter==="all"||String(x.pass.day)===buyerFilter).sort((a,b)=>a.l.dateISO.localeCompare(b.l.dateISO)||a.pass.time.localeCompare(b.pass.time));
   const days=[...new Set(state.listings.filter(l=>l.status==="available").map(l=>passById(l.passId).day))].sort();
-  const filters=`<div class="filters"><button data-filter="all" class="${buyerFilter==='all'?'on':''}">Alle Tage</button>${days.map(d=>`<button data-filter="${d}" class="${buyerFilter==String(d)?'on':''}">${DAYS_SHORT[d]}</button>`).join("")}</div>`;
+  const filters=`<div class="filters"><button data-filter="all" class="${buyerFilter==='all'?'on':''}">All days</button>${days.map(d=>`<button data-filter="${d}" class="${buyerFilter==String(d)?'on':''}">${DAYS[d].slice(0,3)}</button>`).join("")}</div>`;
   let list;
-  if(!avail.length){list=`<div class="card"><p class="empty">Gerade sind keine Plätze am Markt. Schau bald wieder vorbei! 🏐</p></div>`}
-  else{list=`<div class="card"><h3>📅 Diese Saison verfügbar</h3>`+avail.map(({l,pass})=>{const wk=weeksFromNow(l.dateISO);return `<div class="slot-row"><div class="slot-main"><span class="slot-when">${prettyDate(l.dateISO)} · ${pass.time}</span><span class="slot-sub">Platz ${pass.court} · ${DAYS[pass.day]} · freigegeben von ${pass.holder} · ${wk===0?"diese Woche":"in "+wk+" Wo."}</span></div><div class="slot-right"><span class="price">${fmt(l.price)}</span><button class="btn btn-ocean sm" data-act="book" data-id="${l.id}">Buchen</button></div></div>`}).join("")+`</div>`}
-  const mine=state.listings.filter(l=>l.status==="booked"&&l.buyer==="Ich (Demo-Käufer)");
+  if(!avail.length){list=`<div class="card"><p class="empty">No courts on the market right now. Check back soon! 🏐</p></div>`}
+  else{list=`<div class="card"><h3>📅 Available this season</h3>`+avail.map(({l,pass})=>{const wk=weeksFromNow(l.dateISO);return `<div class="slot-row"><div class="slot-main"><span class="slot-when">${prettyDate(l.dateISO)} · ${pass.time}</span><span class="slot-sub">Court ${pass.court} · ${DAYS[pass.day]} · released by ${pass.holder} · ${wk===0?"this week":"in "+wk+" wk"+(wk>1?"s":"")}</span></div><div class="slot-right"><span class="price">${fmt(l.price)}</span><button class="btn btn-ocean sm" data-act="book" data-id="${l.id}">Book</button></div></div>`}).join("")+`</div>`}
+  const mine=state.listings.filter(l=>l.status==="booked"&&l.buyer==="Me (demo buyer)");
   let mb="";
-  if(mine.length){mb=`<div class="card"><h3>✅ Meine Buchungen</h3>`+mine.map(l=>{const p=passById(l.passId);return `<div class="slot-row"><div class="slot-main"><span class="slot-when">${prettyDate(l.dateISO)} · ${p.time} <span class="pill booked">Gebucht</span></span><span class="slot-sub">Platz ${p.court} · ${fmt(l.price)} per Überweisung an ${p.holder} zahlen</span></div></div>`}).join("")+`</div>`}
-  return `<div class="view-intro"><h2>Platz finden</h2><p>Saisonkarten-Inhaber haben diese Slots freigegeben. Schnapp dir einen!</p></div>${filters}${list}${mb}`;
+  if(mine.length){mb=`<div class="card"><h3>✅ My bookings</h3>`+mine.map(l=>{const p=passById(l.passId);return `<div class="slot-row"><div class="slot-main"><span class="slot-when">${prettyDate(l.dateISO)} · ${p.time} <span class="pill booked">Booked</span></span><span class="slot-sub">Court ${p.court} · pay ${fmt(l.price)} to ${p.holder} by bank transfer</span></div></div>`}).join("")+`</div>`}
+  return `<div class="view-intro"><h2>Find a court</h2><p>Season-pass holders freed up these slots. Grab one!</p></div>${filters}${list}${mb}`;
 }
 
 function renderOwner(){
   const s=state.settings,booked=state.listings.filter(l=>l.status==="booked"),live=state.listings.filter(l=>l.status==="available");
   const gross=booked.reduce((a,l)=>a+l.price,0),comm=booked.reduce((a,l)=>a+commission(l.price),0);
-  const stats=`<div class="stats"><div class="stat"><div class="n">${state.passes.length}</div><div class="l">Saisonkarten</div></div><div class="stat"><div class="n">${live.length}</div><div class="l">Am Markt</div></div><div class="stat"><div class="n">${booked.length}</div><div class="l">Gebuchte Tausche</div></div><div class="stat"><div class="n">${fmt(comm)}</div><div class="l">Deine Provision</div></div></div>`;
-  const settings=`<div class="card"><h3>⚙️ Marktplatz-Einstellungen</h3><div class="inline-edit"><div><label class="field">Vereinsname</label><input class="in" id="set-name" value="${s.courtName}"></div><div><label class="field">Provision %</label><input class="in" id="set-comm" type="number" min="0" max="100" value="${s.commissionPct}"></div><div><label class="field">Vorgeschlagener Preis (€)</label><input class="in" id="set-price" type="number" min="0" value="${s.defaultPrice}"></div><button class="btn btn-ocean" data-act="save-settings">Speichern</button></div></div>`;
+  const stats=`<div class="stats"><div class="stat"><div class="n">${state.passes.length}</div><div class="l">Season passes</div></div><div class="stat"><div class="n">${live.length}</div><div class="l">On the market</div></div><div class="stat"><div class="n">${booked.length}</div><div class="l">Swaps booked</div></div><div class="stat"><div class="n">${fmt(comm)}</div><div class="l">Your commission</div></div></div>`;
+  const settings=`<div class="card"><h3>⚙️ Marketplace settings</h3><div class="inline-edit"><div><label class="field">Club name</label><input class="in" id="set-name" value="${s.courtName}"></div><div><label class="field">Commission %</label><input class="in" id="set-comm" type="number" min="0" max="100" value="${s.commissionPct}"></div><div><label class="field">Suggested price</label><input class="in" id="set-price" type="number" min="0" value="${s.defaultPrice}"></div><button class="btn btn-ocean" data-act="save-settings">Save</button></div></div>`;
   let ledger;
-  if(!booked.length){ledger=`<div class="card"><h3>📒 Buchungsübersicht</h3><p class="empty">Noch keine Tausche gebucht.</p></div>`}
-  else{ledger=`<div class="card"><h3>📒 Buchungsübersicht</h3><p class="section-note">Manuelle Abrechnung – der Käufer zahlt den Karteninhaber; der Karteninhaber leitet deine Provision weiter.</p><table><thead><tr><th>Slot</th><th>Karteninhaber</th><th>Käufer</th><th class="num">Preis</th><th class="num">Dein Anteil</th><th class="num">Sie behalten</th></tr></thead><tbody>${booked.map(l=>{const p=passById(l.passId);return `<tr><td>Pl. ${p.court} · ${prettyDate(l.dateISO)} ${p.time}</td><td>${p.holder}</td><td>${l.buyer}</td><td class="num">${fmt(l.price)}</td><td class="num" style="color:var(--good);font-weight:700">${fmt(commission(l.price))}</td><td class="num">${fmt(payout(l.price))}</td></tr>`}).join("")}</tbody><tfoot><tr><td colspan="3">Gesamt</td><td class="num">${fmt(gross)}</td><td class="num" style="color:var(--good)">${fmt(comm)}</td><td class="num">${fmt(gross-comm)}</td></tr></tfoot></table></div>`}
+  if(!booked.length){ledger=`<div class="card"><h3>📒 Booking ledger</h3><p class="empty">No swaps booked yet.</p></div>`}
+  else{ledger=`<div class="card"><h3>📒 Booking ledger</h3><p class="section-note">Manual settlement — buyer pays the pass-holder; the pass-holder forwards your commission.</p><table><thead><tr><th>Slot</th><th>Pass-holder</th><th>Buyer</th><th class="num">Price</th><th class="num">Your cut</th><th class="num">They keep</th></tr></thead><tbody>${booked.map(l=>{const p=passById(l.passId);return `<tr><td>Ct ${p.court} · ${prettyDate(l.dateISO)} ${p.time}</td><td>${p.holder}</td><td>${l.buyer}</td><td class="num">${fmt(l.price)}</td><td class="num" style="color:var(--good);font-weight:700">${fmt(commission(l.price))}</td><td class="num">${fmt(payout(l.price))}</td></tr>`}).join("")}</tbody><tfoot><tr><td colspan="3">Total</td><td class="num">${fmt(gross)}</td><td class="num" style="color:var(--good)">${fmt(comm)}</td><td class="num">${fmt(gross-comm)}</td></tr></tfoot></table></div>`}
   const by={};booked.forEach(l=>{const p=passById(l.passId);by[p.holder]=(by[p.holder]||0)+commission(l.price)});
   const owedRows=Object.entries(by).sort((a,b)=>b[1]-a[1]);
   let owed="";
-  if(owedRows.length){owed=`<div class="card"><h3>💵 Dir zustehende Provision</h3>${owedRows.map(([n,a])=>`<div class="slot-row"><div class="slot-main"><span class="slot-when">${n}</span></div><span class="price" style="color:var(--good)">${fmt(a)}</span></div>`).join("")}</div>`}
-  const reset=`<div style="text-align:center;margin-top:26px"><button class="reset-link" data-act="reset">Demodaten zurücksetzen</button></div>`;
-  return `<div class="view-intro"><h2>Betreiber-Dashboard</h2><p>${s.courtName} · Tausche überwachen, Provision festlegen, Auszahlungen verfolgen.</p></div>${stats}${settings}${ledger}${owed}${reset}`;
+  if(owedRows.length){owed=`<div class="card"><h3>💵 Commission owed to you</h3>${owedRows.map(([n,a])=>`<div class="slot-row"><div class="slot-main"><span class="slot-when">${n}</span></div><span class="price" style="color:var(--good)">${fmt(a)}</span></div>`).join("")}</div>`}
+  const reset=`<div style="text-align:center;margin-top:26px"><button class="reset-link" data-act="reset">Reset demo data</button></div>`;
+  return `<div class="view-intro"><h2>Owner dashboard</h2><p>${s.courtName} · oversee swaps, set commission, track payouts.</p></div>${stats}${settings}${ledger}${owed}${reset}`;
 }
 
 function wire(){
@@ -489,23 +511,23 @@ function handleAct(d){
   else if(d.act==="withdraw")withdraw(d.id);
   else if(d.act==="book")openBookModal(d.id);
   else if(d.act==="save-settings")saveSettings();
-  else if(d.act==="reset"){if(confirm("Alle Demodaten auf das Ausgangsbeispiel zurücksetzen?")){store.remove(STORAGE_KEY);state=load();render();toast("Demo zurückgesetzt")}}
+  else if(d.act==="reset"){if(confirm("Reset all demo data to the starting example?")){store.remove(STORAGE_KEY);state=load();render();toast("Demo reset")}}
 }
 function openListModal(passId,dateISO){
   const pass=passById(passId);
-  openModal(`<h3>Platz am Markt anbieten</h3><div class="sub">Platz ${pass.court} · ${prettyDate(dateISO)} · ${pass.time}</div><label class="field">Preis (€)</label><input class="in" id="list-price" type="number" min="0" value="${state.settings.defaultPrice}"><div class="settle" id="list-settle"></div><div class="modal-actions"><button class="btn btn-soft" onclick="closeModal()">Abbrechen</button><button class="btn btn-coral" id="list-confirm">Anbieten</button></div>`);
+  openModal(`<h3>Put your court on the market</h3><div class="sub">Court ${pass.court} · ${prettyDate(dateISO)} · ${pass.time}</div><label class="field">Asking price (${state.settings.currency})</label><input class="in" id="list-price" type="number" min="0" value="${state.settings.defaultPrice}"><div class="settle" id="list-settle"></div><div class="modal-actions"><button class="btn btn-soft" onclick="closeModal()">Cancel</button><button class="btn btn-coral" id="list-confirm">List it</button></div>`);
   const inp=document.getElementById("list-price");
-  const upd=()=>{const p=parseFloat(inp.value)||0;document.getElementById("list-settle").innerHTML=`<div class="line"><span>Käufer zahlt</span><span>${fmt(p)}</span></div><div class="line"><span>Vereinsprovision (${state.settings.commissionPct} %)</span><span>− ${fmt(commission(p))}</span></div><div class="line total"><span>Du behältst</span><span>${fmt(payout(p))}</span></div>`};
+  const upd=()=>{const p=parseFloat(inp.value)||0;document.getElementById("list-settle").innerHTML=`<div class="line"><span>Buyer pays</span><span>${fmt(p)}</span></div><div class="line"><span>Club commission (${state.settings.commissionPct}%)</span><span>− ${fmt(commission(p))}</span></div><div class="line total"><span>You keep</span><span>${fmt(payout(p))}</span></div>`};
   inp.addEventListener("input",upd);upd();
-  document.getElementById("list-confirm").addEventListener("click",()=>{const price=parseFloat(inp.value)||0;if(price<=0){toast("Preis eingeben");return}state.listings.push({id:"l_"+passId+"_"+dateISO,passId,dateISO,price,status:"available",buyer:null,bookedAt:null});save();closeModal();render();toast("Am Markt angeboten 🏐")});
+  document.getElementById("list-confirm").addEventListener("click",()=>{const price=parseFloat(inp.value)||0;if(price<=0){toast("Enter a price");return}state.listings.push({id:"l_"+passId+"_"+dateISO,passId,dateISO,price,status:"available",buyer:null,bookedAt:null});save();closeModal();render();toast("Listed on the market 🏐")});
 }
-function withdraw(id){const l=state.listings.find(x=>x.id===id);if(l){l.status="withdrawn";save();render();toast("Vom Markt genommen")}}
+function withdraw(id){const l=state.listings.find(x=>x.id===id);if(l){l.status="withdrawn";save();render();toast("Taken off the market")}}
 function openBookModal(id){
   const l=state.listings.find(x=>x.id===id),pass=passById(l.passId);
-  openModal(`<h3>Diesen Platz buchen</h3><div class="sub">Platz ${pass.court} · ${prettyDate(l.dateISO)} · ${pass.time}</div><label class="field">Dein Name</label><input class="in" id="book-name" placeholder="z. B. Sam" value="Ich (Demo-Käufer)"><div class="settle"><div class="line"><span>Du zahlst ${pass.holder}</span><span>${fmt(l.price)}</span></div><div class="line"><span>(davon Vereinsprovision)</span><span>${fmt(commission(l.price))}</span></div><div class="line total"><span>Fällig gesamt (Überweisung)</span><span>${fmt(l.price)}</span></div></div><div class="modal-actions"><button class="btn btn-soft" onclick="closeModal()">Abbrechen</button><button class="btn btn-ocean" id="book-confirm">Buchung bestätigen</button></div>`);
-  document.getElementById("book-confirm").addEventListener("click",()=>{const name=(document.getElementById("book-name").value||"").trim()||"Anonym";l.status="booked";l.buyer=name;l.bookedAt=iso(todayMidnight());save();closeModal();render();toast("Gebucht! ✅ Per Überweisung zahlen.")});
+  openModal(`<h3>Book this court</h3><div class="sub">Court ${pass.court} · ${prettyDate(l.dateISO)} · ${pass.time}</div><label class="field">Your name</label><input class="in" id="book-name" placeholder="e.g. Sam" value="Me (demo buyer)"><div class="settle"><div class="line"><span>You pay ${pass.holder}</span><span>${fmt(l.price)}</span></div><div class="line"><span>(of which club commission)</span><span>${fmt(commission(l.price))}</span></div><div class="line total"><span>Total due (bank transfer)</span><span>${fmt(l.price)}</span></div></div><div class="modal-actions"><button class="btn btn-soft" onclick="closeModal()">Cancel</button><button class="btn btn-ocean" id="book-confirm">Confirm booking</button></div>`);
+  document.getElementById("book-confirm").addEventListener("click",()=>{const name=(document.getElementById("book-name").value||"").trim()||"Anonymous";l.status="booked";l.buyer=name;l.bookedAt=iso(todayMidnight());save();closeModal();render();toast("Booked! ✅ Pay by bank transfer.")});
 }
-function saveSettings(){state.settings.courtName=document.getElementById("set-name").value||state.settings.courtName;state.settings.commissionPct=Math.max(0,Math.min(100,parseFloat(document.getElementById("set-comm").value)||0));state.settings.defaultPrice=Math.max(0,parseFloat(document.getElementById("set-price").value)||0);save();render();toast("Einstellungen gespeichert")}
+function saveSettings(){state.settings.courtName=document.getElementById("set-name").value||state.settings.courtName;state.settings.commissionPct=Math.max(0,Math.min(100,parseFloat(document.getElementById("set-comm").value)||0));state.settings.defaultPrice=Math.max(0,parseFloat(document.getElementById("set-price").value)||0);save();render();toast("Settings saved")}
 
 document.querySelectorAll("#roles button").forEach(b=>b.addEventListener("click",()=>{state.role=b.dataset.role;save();render()}));
 </script>
